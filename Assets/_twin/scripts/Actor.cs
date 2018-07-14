@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    public Weapon[] weapons = new Weapon[0];
+    public Vector3 Velocity { get; set; }
+    public float Speed { get { return Velocity.magnitude; } }
+    public Weapon[] Weapons = new Weapon[0];
 
     public Weapon CurrentWeapon()
     {
         if (currentWeapon != null)
             return currentWeapon;
-        if (weapons.Length > 0)
-            return weapons[0];
+        if (Weapons.Length > 0)
+            return Weapons[0];
         return null;
+    }
+
+    void Update()
+    {
+        var movementDirection = Velocity.normalized;
+
+        // handle movement
+        transform.position = transform.position + Velocity * Time.deltaTime;
     }
 
     Weapon currentWeapon;
