@@ -41,6 +41,17 @@ public class Actor : MonoBehaviour
         }
     }
 
+    public void Hide()
+    {
+        var renderers = GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+            r.enabled = false;
+
+        var colliders = GetComponentsInChildren<Collider>();
+        foreach (var c in colliders)
+            c.enabled = false;
+    }
+
     Weapon currentWeapon;
 }
 
