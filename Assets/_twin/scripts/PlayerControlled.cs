@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Actor))]
 public class PlayerControlled : MonoBehaviour
 {
-    float MaxSpeed = 2.5f;
-    float Acceleration = 15.0f;
-    float Drag = 10.0f;
+    public float MaxSpeed = 2.5f;
+    public float Acceleration = 15.0f;
+    public float Drag = 10.0f;
 
     void Start()
     {

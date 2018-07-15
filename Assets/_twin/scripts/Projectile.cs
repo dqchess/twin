@@ -7,7 +7,9 @@ public class Projectile : MonoBehaviour
 {
     public float Range = 10.0f;
     public Vector3 Origin;
+    public Vector2 Damage = new Vector2(1.0f, 1.0f);
     public GameObject[] Visual;
+    public bool DestroyOnImpact = true;
 
     void Start()
     {
@@ -22,5 +24,18 @@ public class Projectile : MonoBehaviour
     {
         if (Vector3.Distance(Origin, transform.position) > Range)
             Destroy(gameObject);
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        Destructible dest = collision.attachedRigidbody.GetComponent<Destructible>();
+        if (dest != null)
+        {
+            float damage = Random.Range(Damage.x, Damage.y);
+            dest.Damage(damage);
+
+            if (DestroyOnImpact)
+                Destroy(gameObject);
+        }
     }
 }

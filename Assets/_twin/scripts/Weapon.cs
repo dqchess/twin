@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 {
     public Projectile Projectile;
     public float ProjectileSpeed = 1.0f;
+    public float ProjectileVelocityInheritFactor = 1.0f;
     public float CooldownTime = 1.0f;
     public float SpawnAheadDistance = 0.0f;
 
@@ -27,12 +28,10 @@ public class Weapon : MonoBehaviour
 
         if (cooldownRemaining <= 0.0f)
         {
-            Debug.Log("Firing weapon, direction = " + direction);
             cooldownRemaining += CooldownTime;
-
             var proj = GameObject.Instantiate(Projectile.gameObject, transform.position + direction * SpawnAheadDistance, Quaternion.LookRotation(direction, Vector3.up));
             proj.GetComponent<Projectile>().Origin = transform.position;
-            proj.GetComponent<Actor>().Velocity = direction * ProjectileSpeed + originVelocity;
+            proj.GetComponent<Actor>().Velocity = direction * ProjectileSpeed + originVelocity * ProjectileVelocityInheritFactor;
         }
     }
 
