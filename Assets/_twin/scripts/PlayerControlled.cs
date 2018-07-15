@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerControlled : MonoBehaviour
 {
     float MaxSpeed = 2.5f;
-    float Acceleration = 50.0f;
+    float Acceleration = 15.0f;
     float Drag = 10.0f;
 
     void Start()
@@ -18,11 +18,12 @@ public class PlayerControlled : MonoBehaviour
     {
         Actor actor = GetComponent<Actor>();
 
+        // handle movement
         var movementInput = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-        actor.Velocity += (movementInput * Acceleration * Time.deltaTime);
-
-        float speed = actor.Speed;
-        if (actor.Velocity.magnitude > 0)
+        var velocity = actor.Velocity;
+        velocity += (movementInput * Acceleration * Time.deltaTime);
+        float speed = velocity.magnitude;
+        if (speed > 0)
         {
             if (movementInput.magnitude == 0)
             {
@@ -32,8 +33,9 @@ public class PlayerControlled : MonoBehaviour
 
             if (speed > MaxSpeed) speed = MaxSpeed;
         }
-        var movementDirection = actor.Velocity.normalized;
-        actor.Velocity = movementDirection * speed;
+        var movementDirection = velocity.normalized;
+        velocity = movementDirection * speed;
+        actor.Velocity = velocity;
 
         // handle directional firing
         Weapon currentWeapon = actor.CurrentWeapon();

@@ -153,8 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39de82c1946552540adc306cd5fbcf12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons:
+  Weapons:
   - {fileID: 514115844}
+  RotateToMovementDirection: 1
 --- !u!4 &514115843
 Transform:
   m_ObjectHideFlags: 0
@@ -180,7 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66221caac1b34e447b6551aa9b65b4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CooldownTime: 1
+  Projectile: {fileID: 114732136668792840, guid: bd46fbe965a637c4a8ce9f270ebf2a79,
+    type: 2}
+  ProjectileSpeed: 10
+  CooldownTime: 0.2
+  SpawnAheadDistance: 0.2
 --- !u!1 &624323294
 GameObject:
   m_ObjectHideFlags: 0
