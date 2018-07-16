@@ -14,8 +14,10 @@ public class Destructible : MonoBehaviour
     }
     public TempEffect DestroyEffect;
 
-    public void Damage(float Amount)
+    public void Damage(float Amount, Vector3 ImpactDirection)
     {
+        Debug.Log("Hit for " + Amount + " damage from direction " + ImpactDirection);
+
         HitPoints -= Amount;
         if (HitPoints <= 0.0f)
         {

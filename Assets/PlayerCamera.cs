@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public Actor Player;
+    public float Distance = 20.0f;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class PlayerCamera : MonoBehaviour
     {
         var pos = transform.position;
         pos.x = Player.transform.position.x;
+        pos.y = Distance;
         pos.z = Player.transform.position.z;
         transform.position = pos;
     }

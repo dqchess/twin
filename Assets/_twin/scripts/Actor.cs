@@ -8,8 +8,8 @@ public class Actor : MonoBehaviour
     public float Speed { get { return Velocity.magnitude; } }
     public Weapon[] Weapons = new Weapon[0];
     public bool RotateToMovementDirection = true;
-    float RotationRate = 0.15f;
-    float LargeDirectionChangeMaxSpeed = 1.0f;
+    public float RotationRate = 0.15f;
+    public float LargeDirectionChangeMaxSpeed = 1.0f;
 
     public Weapon CurrentWeapon()
     {

@@ -334,8 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf78afd1054452c4c8379a3567d5009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundEffect: {fileID: 8300000, guid: 4977e4023e17c1b48a0c7e08b40fbb23, type: 3}
   Lifespan: 1
+  Visual: []
+  SoundEffect:
+  - {fileID: 8300000, guid: 4977e4023e17c1b48a0c7e08b40fbb23, type: 3}
+  - {fileID: 8300000, guid: 127aefccc230c8742bdf3ca699a0a4a3, type: 3}
 --- !u!114 &114259266580444806
 MonoBehaviour:
   m_ObjectHideFlags: 1

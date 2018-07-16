@@ -16,8 +16,8 @@ public class Projectile : MonoBehaviour
     {
         if (Visual.Length > 0)
         {
-            int visidx = Random.Range(0, Visual.Length);
-            Instantiate(Visual[visidx], transform);
+            if (Visual.Length > 0 )
+                Instantiate(RandomUtils.Pick(Visual), transform);
         }
     }
 
@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
         if (dest != null)
         {
             float damage = Random.Range(Damage.x, Damage.y);
-            dest.Damage(damage);
+            dest.Damage(damage, GetComponent<Actor>().Velocity.normalized);
 
             if (DestroyOnImpact)
             {
