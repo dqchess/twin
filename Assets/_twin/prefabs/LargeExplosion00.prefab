@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114372241633960614}
   - component: {fileID: 82157566563926052}
   m_Layer: 0
-  m_Name: Explosion00
+  m_Name: LargeExplosion00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +150,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lifespan: 5
   Visual:
-  - {fileID: 100000, guid: 5c66aaebaed6ae54183b4e93cfbc6397, type: 2}
   - {fileID: 134476, guid: b105d5a049366984e833cf18fe6ecb7b, type: 2}
   - {fileID: 192552, guid: b927b2f8c04fc4f4aac5d7b91c6a8280, type: 2}
   SoundEffect:

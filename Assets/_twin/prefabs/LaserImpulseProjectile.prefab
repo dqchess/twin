@@ -70,6 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapons: []
   RotateToMovementDirection: 0
+  RotationRate: 0.15
+  LargeDirectionChangeMaxSpeed: 1
 --- !u!114 &114732136668792840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,5 +90,7 @@ MonoBehaviour:
   - {fileID: 1443791808082564, guid: aa90cfd966b125f47bcdf9f2e6cbe8e8, type: 2}
   - {fileID: 1803721303040500, guid: 98a3f9f5c99294147a20b6756aa4271b, type: 2}
   DestroyOnImpact: 1
-  ImpactEffect: {fileID: 114038015592170144, guid: 4de2c464fc1160c4ba3c4b6354672b05,
-    type: 2}
+  ImpactEffect:
+  - {fileID: 114038015592170144, guid: 4de2c464fc1160c4ba3c4b6354672b05, type: 2}
+  FizzleEffect:
+  - {fileID: 114781782122534032, guid: 0ce7db854b9258f47bd82f40d04411b0, type: 2}

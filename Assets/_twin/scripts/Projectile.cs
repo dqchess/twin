@@ -10,21 +10,23 @@ public class Projectile : MonoBehaviour
     public Vector2 Damage = new Vector2(1.0f, 1.0f);
     public GameObject[] Visual;
     public bool DestroyOnImpact = true;
-    public TempEffect ImpactEffect;
+    public TempEffect[] ImpactEffect;
+    public TempEffect[] FizzleEffect;
 
     void Start()
     {
-        if (Visual.Length > 0)
-        {
-            if (Visual.Length > 0 )
-                Instantiate(RandomUtils.Pick(Visual), transform);
-        }
+        if (Visual.Length > 0 )
+            Instantiate(RandomUtils.Pick(Visual), transform);
     }
 
     void Update()
     {
         if (Vector3.Distance(Origin, transform.position) > Range)
+        {
+            if (FizzleEffect.Length > 0)
+                Instantiate(RandomUtils.Pick(FizzleEffect), transform.position, transform.rotation);
             Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider collision)
@@ -37,7 +39,8 @@ public class Projectile : MonoBehaviour
 
             if (DestroyOnImpact)
             {
-                Instantiate(ImpactEffect, transform.position, transform.rotation);
+                if (ImpactEffect.Length > 0)
+                    Instantiate(RandomUtils.Pick(ImpactEffect), transform.position, transform.rotation);
                 Destroy(gameObject);
             }
         }

@@ -18,15 +18,11 @@ public class TempEffect : MonoBehaviour
                 var vis = Instantiate(RandomUtils.Pick(Visual), transform);
                 vis.transform.localPosition = Vector3.zero;
                 vis.transform.localRotation = Quaternion.identity;
-                // @todo - possible to programatically turn off 'loop' flag in particle fx?
             }
         }
 
-        GetComponent<AudioSource>().PlayOneShot(RandomUtils.Pick(SoundEffect));
+        if (SoundEffect.Length > 0)
+            GetComponent<AudioSource>().PlayOneShot(RandomUtils.Pick(SoundEffect));
         Destroy(gameObject, Lifespan);
-    }
-
-    void Update()
-    {
     }
 }
