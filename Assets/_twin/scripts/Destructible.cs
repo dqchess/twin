@@ -13,6 +13,7 @@ public class Destructible : MonoBehaviour
         private set;
     }
     public TempEffect DestroyEffect;
+    public float DestroyObjectDelay = 0.15f;
 
     public bool LurchOnImpact = true;
     public bool LurchFreelyOnDestruction = true;
@@ -25,7 +26,7 @@ public class Destructible : MonoBehaviour
     public AudioClip[] FatalBlowSound;
     public GameObject[] FatalBlowEffect;
 
-    public void Damage(float Amount, Vector3 ImpactDirection)
+    public void Damage(float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection)
     {
         HitPoints -= Amount;
         if (HitPoints <= 0.0f && !explosionImminent)
@@ -34,13 +35,13 @@ public class Destructible : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(RandomUtils.Pick(FatalBlowSound));
                 var effect = Instantiate(RandomUtils.Pick(FatalBlowEffect), LurchTransform);
-                effect.transform.localPosition = Vector3.zero;
+                effect.transform.position = ImpactLocation;
                 effect.transform.localRotation = Quaternion.identity;
-                Invoke("Destroy", Random.Range(LurchFreelyDurationRange.x, LurchFreelyDurationRange.y));
+                Invoke("Explode", Random.Range(LurchFreelyDurationRange.x, LurchFreelyDurationRange.y));
             }
             else
             {
-                Destroy();
+                Explode();
             }
             explosionImminent = true;
         }
@@ -58,9 +59,19 @@ public class Destructible : MonoBehaviour
         }
     }
 
-    void Destroy()
+    void Explode()
     {
         var effect = Instantiate(DestroyEffect, transform.position, transform.rotation);
+        if (LurchOnImpact)
+        {
+            effect.transform.position = transform.position;
+            effect.transform.rotation = LurchTransform.rotation;
+        }
+        Invoke("Destroy", DestroyObjectDelay);
+    }
+
+    void Destroy()
+    {
         Destroy(gameObject);
     }
 

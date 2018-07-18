@@ -35,7 +35,7 @@ public class Projectile : MonoBehaviour
         if (dest != null)
         {
             float damage = Random.Range(Damage.x, Damage.y);
-            dest.Damage(damage, GetComponent<Actor>().Velocity.normalized);
+            dest.Damage(damage, transform.position, GetComponent<Actor>().Velocity.normalized);
 
             if (DestroyOnImpact)
             {
