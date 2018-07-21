@@ -40,7 +40,6 @@ public class Destructible : MonoBehaviour
     public void Damage(Actor Originator, float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection, float ImpactStrength)
     {
         HitPoints -= Amount;
-        if (OnDamaged != null) OnDamaged(Originator);
         if (HitPoints <= 0.0f && !explosionImminent)
         {
             if (LurchOnImpact && LurchFreelyOnDestruction)
@@ -76,6 +75,8 @@ public class Destructible : MonoBehaviour
             lurch.amount = ImpactStrength;
             lurches.Add(lurch);
         }
+
+        if (OnDamaged != null) OnDamaged(Originator);
     }
 
     void Explode()

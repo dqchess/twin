@@ -17,33 +17,42 @@ public class PlayerControlled : MonoBehaviour
 
     void Update()
     {
-        Actor actor = GetComponent<Actor>();
+        var dest = GetComponent<Destructible>();
 
-        // handle movement
-        float topSpeed = Input.GetAxis("Boost") > 0.0f ? BoostedMaxSpeed : MaxSpeed;
-        var movementInput = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-        var velocity = actor.Velocity;
-        velocity += (movementInput * Acceleration * Time.deltaTime);
-        float speed = velocity.magnitude;
-        if (speed > 0)
+        if (!dest.Destroyed)
         {
-            if (movementInput.magnitude == 0)
+            var actor = GetComponent<Actor>();
+
+            // handle movement
+            float topSpeed = Input.GetAxis("Boost") > 0.0f ? BoostedMaxSpeed : MaxSpeed;
+            var movementInput = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+            var velocity = actor.Velocity;
+            velocity += (movementInput * Acceleration * Time.deltaTime);
+            float speed = velocity.magnitude;
+            if (speed > 0)
             {
-                float drag = Drag * Time.deltaTime;
-                speed = speed - Mathf.Min(speed, drag);
+                if (movementInput.magnitude == 0)
+                {
+                    float drag = Drag * Time.deltaTime;
+                    speed = speed - Mathf.Min(speed, drag);
+                }
+
+                if (speed > topSpeed) speed = topSpeed;
             }
+            var movementDirection = velocity.normalized;
+            velocity = movementDirection * speed;
+            actor.Velocity = velocity;
 
-            if (speed > topSpeed) speed = topSpeed;
+            // handle directional firing
+            if (Input.GetAxis("Fire1") > 0.0f)
+                FireWeapon(actor.MainWeapon());
+            if (Input.GetAxis("Fire2") > 0.0f)
+                FireWeapon(actor.SecondaryWeapon());
+
+            // self-destruct!
+            if (Input.GetAxis("SelfDestruct") > 0.0f)
+                dest.Damage(null, 999999.0f, transform.position, Vector3.forward, 2.0f);
         }
-        var movementDirection = velocity.normalized;
-        velocity = movementDirection * speed;
-        actor.Velocity = velocity;
-
-        // handle directional firing
-        if (Input.GetAxis("Fire1") > 0.0f)
-            FireWeapon(actor.MainWeapon());
-        if (Input.GetAxis("Fire2") > 0.0f)
-            FireWeapon(actor.SecondaryWeapon());
     }
 
     void FireWeapon(Weapon weapon)
