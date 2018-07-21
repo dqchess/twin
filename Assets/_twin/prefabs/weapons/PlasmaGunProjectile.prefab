@@ -83,14 +83,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfeab6c3d2b159c4d89ffa924f6e6870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 40
+  Range: 50
   Origin: {x: 0, y: 0, z: 0}
   OriginObject: {fileID: 0}
   Damage: {x: 2, y: 2}
-  HomingAmount: 0.25
-  HomingAngle: 30
+  HomingAmount: 0.75
+  HomingAngle: 90
   DestroyOnImpact: 1
-  ImpactStrength: 3
+  ImpactStrength: 2
   Visual:
   - {fileID: 1931966947951366, guid: ea4e0a959bbacf94fb59df294d63e2e2, type: 2}
   ImpactEffect:

@@ -34,9 +34,13 @@ public class Destructible : MonoBehaviour
     public AudioClip[] FatalBlowSound;
     public GameObject[] FatalBlowEffect;
 
-    public void Damage(float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection, float ImpactStrength)
+    public delegate void OnDamagedFn(Actor Originator);
+    public OnDamagedFn OnDamaged;
+
+    public void Damage(Actor Originator, float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection, float ImpactStrength)
     {
         HitPoints -= Amount;
+        if (OnDamaged != null) OnDamaged(Originator);
         if (HitPoints <= 0.0f && !explosionImminent)
         {
             if (LurchOnImpact && LurchFreelyOnDestruction)
