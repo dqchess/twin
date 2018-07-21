@@ -7,6 +7,13 @@ using UnityEngine;
 public class Destructible : MonoBehaviour
 {
     public Vector2 HitPointRange = new Vector2(10.0f, 10.0f);
+    public bool Destroyed
+    {
+        get
+        {
+            return HitPoints <= 0.0f;
+        }
+    }
     public float HitPoints
     {
         get;
@@ -17,6 +24,7 @@ public class Destructible : MonoBehaviour
 
     public bool LurchOnImpact = true;
     public bool LurchFreelyOnDestruction = true;
+    public bool ExplodeImmediatelyOnHitWhenLurching = false;
     public Vector2 LurchFreelyDurationRange = new Vector2(0.5f, 1.5f);
     public float LurchRecoveryRate = 0.1f;
     public float LurchRotationStrength = 90.0f;
@@ -26,7 +34,7 @@ public class Destructible : MonoBehaviour
     public AudioClip[] FatalBlowSound;
     public GameObject[] FatalBlowEffect;
 
-    public void Damage(float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection)
+    public void Damage(float Amount, Vector3 ImpactLocation, Vector3 ImpactDirection, float ImpactStrength)
     {
         HitPoints -= Amount;
         if (HitPoints <= 0.0f && !explosionImminent)
@@ -37,13 +45,20 @@ public class Destructible : MonoBehaviour
                 var effect = Instantiate(RandomUtils.Pick(FatalBlowEffect), LurchTransform);
                 effect.transform.position = ImpactLocation;
                 effect.transform.localRotation = Quaternion.identity;
-                Invoke("Explode", Random.Range(LurchFreelyDurationRange.x, LurchFreelyDurationRange.y));
+
+                float explosionDelay = Random.Range(LurchFreelyDurationRange.x, LurchFreelyDurationRange.y);
+                timeToExplosion = explosionDelay;
             }
             else
             {
                 Explode();
             }
             explosionImminent = true;
+        }
+        else if (explosionImminent && ExplodeImmediatelyOnHitWhenLurching)
+        {
+            timeToExplosion = 0.0f;
+            Explode();
         }
 
         if (LurchOnImpact)
@@ -54,7 +69,7 @@ public class Destructible : MonoBehaviour
             var lurch = new Lurch();
             lurch.direction = ImpactDirection;
             lurch.axis = lurchAxis;
-            lurch.amount = 1.0f;
+            lurch.amount = ImpactStrength;
             lurches.Add(lurch);
         }
     }
@@ -97,9 +112,17 @@ public class Destructible : MonoBehaviour
             if (HitPoints > 0.0f || !LurchFreelyOnDestruction)
                 LurchTransform.localRotation = Quaternion.Slerp(LurchTransform.localRotation, Quaternion.identity, 0.1f);
         }
+
+        if (explosionImminent && timeToExplosion > 0.0f)
+        {
+            timeToExplosion -= Time.deltaTime;
+            if (timeToExplosion <= 0.0f)
+                Explode();
+        }
     }
 
     bool explosionImminent = false;
+    float timeToExplosion;
     class Lurch
     {
         public Vector3 direction;

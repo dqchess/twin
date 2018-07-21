@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
             cooldownRemaining -= Time.deltaTime;
     }
 
-    public void Fire(Vector3 direction, Vector3 originVelocity)
+    public void Fire(GameObject originator, Vector3 direction, Vector3 originVelocity)
     {
         Debug.Assert(Projectile != null, "weapon has no projectile set");
 
@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
             cooldownRemaining += CooldownTime;
             var proj = GameObject.Instantiate(Projectile.gameObject, transform.position + direction * SpawnAheadDistance, Quaternion.LookRotation(direction, Vector3.up));
             proj.GetComponent<Projectile>().Origin = transform.position;
+            proj.GetComponent<Projectile>().OriginObject = originator;
             proj.GetComponent<Actor>().Velocity = direction * ProjectileSpeed + originVelocity * ProjectileVelocityInheritFactor;
             GetComponent<AudioSource>().PlayOneShot(FireSound);
         }

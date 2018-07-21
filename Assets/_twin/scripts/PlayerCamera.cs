@@ -15,10 +15,13 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
-        var pos = transform.position;
-        pos.x = Player.transform.position.x;
-        pos.y = Distance;
-        pos.z = Player.transform.position.z;
-        transform.position = pos;
+        if (Player != null)
+        {
+            var pos = transform.position;
+            pos.x = Player.transform.position.x;
+            pos.y = Distance;
+            pos.z = Player.transform.position.z;
+            transform.position = pos;
+        }
     }
 }

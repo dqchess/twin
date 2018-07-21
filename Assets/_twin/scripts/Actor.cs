@@ -11,12 +11,17 @@ public class Actor : MonoBehaviour
     public float RotationRate = 0.15f;
     public float LargeDirectionChangeMaxSpeed = 1.0f;
 
-    public Weapon CurrentWeapon()
+    public Weapon MainWeapon()
     {
-        if (currentWeapon != null)
-            return currentWeapon;
         if (Weapons.Length > 0)
             return Weapons[0];
+        return null;
+    }
+
+    public Weapon SecondaryWeapon()
+    {
+        if (Weapons.Length > 1)
+            return Weapons[1];
         return null;
     }
 
@@ -40,7 +45,5 @@ public class Actor : MonoBehaviour
                 Velocity = Velocity.normalized * Mathf.Min(LargeDirectionChangeMaxSpeed, Speed);
         }
     }
-
-    Weapon currentWeapon;
 }
 
